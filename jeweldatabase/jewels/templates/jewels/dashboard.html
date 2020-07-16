@@ -5,60 +5,62 @@
     {% include 'jewels/status.html' %}
 
     <br>
-
-    <div class="row">
-        <div class="col-md-5">
-            <h5>Customers:</h5>
-            <hr>
-            <div class="card card-body">
-                <a href="" class="btn btn-primary btn-sm btn-block">Create customer</a>
-                <table class="table table-sm">
-                    <tr>
-                        <th></th>
-                        <th>Customers</th>
-                        <th>Phone</th>
-                    </tr>
-
-                    {% for customer in customers %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <h5>Últimos 5 clientes:</h5>
+                <hr>
+                <div class="card card-body">
+                    <a href="" class="btn btn-primary btn-sm btn-block">Crear cliente</a>
+                    <table class="table table-sm">
                         <tr>
-                            <td><a href="{% url 'customer' customer.id %}"
-                                class="btn btn-sm btn-info">View</a></td>
-                            <td>{{ customer.name }}</td>
-                            <td>{{ customer.phone }}</td>
+                            <th></th>
+                            <th>Cliente</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
                         </tr>
-                    {% endfor %}
 
-                </table>
+                        {% for customer in customers %}
+                            <tr>
+                                <td><a href="{% url 'customer' customer.id %}"
+                                    class="btn btn-sm btn-info">Ver</a></td>
+                                <td>{{ customer.name }}</td>
+                                <td>{{ customer.phone }}</td>
+                                <td>{{ customer.email }}</td>
+                            </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="col-md-7">
-            <h5>Last 5 orders</h5>
-            <hr>
-            <div class="card card-body">
-                <table class="table table-sm">
-                    <tr>
-                        <th>Product</th>
-                        <th>Date ordered</th>
-                        <th>Status</th>
-                        <th>Update</th>
-                        <th>Remove</th
-                    </tr>
-
-                    {% for order in orders %}
+            <div class="col-md-7">
+                <h5>Últimos 5 pedidos</h5>
+                <hr>
+                <div class="card card-body">
+                    <table class="table table-sm">
                         <tr>
-                            <td>{{ order.product }}</td>
-                            <td>{{ order.date_created }}</td>
-                            <td>{{ order.status }}</td>
-                            <td><a href="{% url 'update_order' order.id %}" class="btn btn-sm btn-info">Update</a></td>
-                            <td><a href="{% url 'delete_order' order.id %}" class="btn btn-sm btn-danger">Delete</a></td>
+                            <th>Producto</th>
+                            <th>Fecha pedido</th>
+                            <th>Estado</th>
+                            <th>Actualizar</th>
+                            <th>Borrar</th>
                         </tr>
-                    {% endfor %}
 
-                </table>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.product }}</td>
+                                <td>{{ order.date_created }}</td>
+                                <td>{{ order.status }}</td>
+                                <td><a href="{% url 'update_order' order.id %}" class="btn btn-sm btn-info">Actualizar</a></td>
+                                <td><a href="{% url 'delete_order' order.id %}" class="btn btn-sm btn-danger">Borrar</a></td>
+                            </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-
 
 
 {% endblock content %}

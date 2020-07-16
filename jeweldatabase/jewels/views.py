@@ -12,7 +12,7 @@ from django.contrib.auth.models import Group
 
 from .models import *
 from .forms import OrderForm, CreateUserForm, CustomerForm
-from .filters import OrderFilter
+from .filters import OrderFilter, CustomerFilter
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
 # Create your views here.
@@ -97,13 +97,16 @@ def accountSettings(request):
 @login_required(login_url='login')
 @admin_only
 def home(request):
-    orders = Order.objects.all()
+    all_orders = Order.objects.all()
+    orders = Order.objects.all().order_by('-id')[:5]
+
     customers = Customer.objects.all()
 
     total_customers = customers.count()
-    total_orders = orders.count()
-    delivered = orders.filter(status='Delivered').count()
-    pending = orders.filter(status='Pending').count()
+    customers = Customer.objects.all().order_by('-date_created')[:5]
+    total_orders = all_orders.count()
+    delivered = all_orders.filter(status='Enviado').count()
+    pending = all_orders.filter(status='Pendiente').count()
 
     context = {
         'orders': orders,
@@ -114,6 +117,17 @@ def home(request):
         'total_orders': total_orders
     }
     return render(request, 'jewels/dashboard.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def product(request, pk):
+    product = Product.objects.get(id=pk)
+
+    context = {'product': product,
+               }
+
+    return render(request, 'jewels/product.html', context)
 
 
 @login_required(login_url='login')
@@ -141,6 +155,25 @@ def customer(request, pk):
                }
 
     return render(request, 'jewels/customer.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def customers(request):
+    customers = Customer.objects.all().order_by('-date_created')
+
+    myFilter = CustomerFilter(request.GET, queryset=Customer.objects.all())
+    customers = myFilter.qs
+
+    context = {
+        'customers': customers,
+        'myFilter': myFilter,
+    }
+    return render(request, 'jewels/customers.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def createCustomer(request):
+    CustomerFormSet = inlineformset_factory(Customer, fields=('name', 'phone'))
 
 
 @login_required(login_url='login')

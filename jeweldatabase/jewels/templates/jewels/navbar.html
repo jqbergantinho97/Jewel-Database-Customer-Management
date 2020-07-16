@@ -17,18 +17,21 @@
     <ul class="navbar-nav">
         {% if request.user.is_staff %}
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Dashboard </a>
+                <a class="nav-link" href="{% url 'home' %}">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'products' %}">Products</a>
+                <a class="nav-link" href="{% url 'products' %}">Productos</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'customers' %}">Clientes</a>
               </li>
         {% else %}
             <li class="nav-item">
-                <a href="{% url 'account' %}" class="nav-link">Settings</a>
+                <a href="{% url 'account' %}" class="nav-link">Ajustes</a>
             </li>
         {% endif %}
     </ul>
   </div>
     <span class="hello-msg">Hello, {{ request.user }}</span>
-    <span><a class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+    <span><a class="hello-msg" href="{% url 'logout' %}">Cerrar sesión</a></span>
 </nav>

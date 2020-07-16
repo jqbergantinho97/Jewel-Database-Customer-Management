@@ -1,0 +1,38 @@
+{% extends 'jewels/main.html' %}
+
+{% block content %}
+
+    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+                    <h5>Clientes</h5>
+                    <form action="" method="get">
+                        {{ myFilter.form }}
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="card card-body">
+                    <table class="table">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th></th>
+                        </tr>
+                        {% for customer in customers %}
+                            <tr>
+                                <td>{{ customer.name }}</td>
+                                <td>{{ customer.phone }}</td>
+                                <td>{{ customer.email }}</td>
+                                <td><a href="{% url 'customer' customer.id %}"
+                                    class="btn btn-info">Ver</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content%}

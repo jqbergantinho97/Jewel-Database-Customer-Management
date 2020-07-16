@@ -11,3 +11,12 @@ class OrderFilter(django_filters.FilterSet):
         model = Order
         fields = '__all__'
         exclude = ['customer', 'date_created']
+
+
+class CustomerFilter(django_filters.FilterSet):
+    start_date = DateFilter(field_name="date_created", lookup_expr="gte")
+    end_date = DateFilter(field_name="date_created", lookup_expr="lte")
+    class Meta:
+        model = Customer
+        fields = '__all__'
+        exclude = ['user', 'profile_pic']
