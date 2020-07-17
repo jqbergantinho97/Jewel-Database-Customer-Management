@@ -8,7 +8,15 @@
         <div class="row">
             <div class="col-md">
                 <div class="card card-body">
-                    <h5>Productos</h5>
+                    <h5>Productos
+                        <a href="{% url 'create_product' %}">
+                            <button class="btn btn-success float-right" style="margin-right: 10px;">Crear</button>
+                        </a>
+                    </h5>
+                    <form action="" method="get">
+                        {{ myFilter.form }}
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
                 </div>
                 <div class="card card-body">
                     <table class="table">
@@ -16,7 +24,7 @@
                             <th>Código</th>
                             <th>Producto</th>
                             <th>Categoría</th>
-                            <th>Medida</th>
+                            <th>Tamaño</th>
                             <th>Material</th>
                             <th>Coste</th>
                             <th>Precio de venta</th>
@@ -28,7 +36,7 @@
                                 <td>{{ i.id }}</td>
                                 <td>{{ i.name }}</td>
                                 <td>{{ i.category }}</td>
-                                <td>{{ i.size }}</td>
+                                <td>{{ i.size }} cm</td>
                                 <td>{{ i.material }}</td>
                                 <td>{{ i.cost_price }}€</td>
                                 <td>{{ i.sell_price }}€</td>

@@ -1,5 +1,15 @@
 {% load static %}
 
+<style>
+    .cost {
+        background-color: #ffa2a2;
+    }
+
+    .sell {
+        background-color: #a3f188;
+    }
+</style>
+
 <br>
 <div class="row">
     <div class="col">
@@ -39,4 +49,28 @@
         </div>
     </div>
 
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
+        <div class="card text-center text-black mb-3" id="orders-delivered">
+            <div class="card-header cost">
+                <h5 class="card-title">Dinero invertido</h5>
+            </div>
+            <div class="card-body cost">
+                <h3 class="card-title">{{ total_cost }}€</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center text-black mb-3" id="orders-delivered">
+            <div class="card-header sell">
+                <h5 class="card-title">Dinero ganado</h5>
+            </div>
+            <div class="card-body sell">
+                <h3 class="card-title">{{ total_gains }}€</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
 </div>

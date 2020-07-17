@@ -7,7 +7,11 @@
         <div class="row">
             <div class="col-md">
                 <div class="card card-body">
-                    <h5>Clientes</h5>
+                    <h5>Clientes
+                        <a href="{% url 'create_customer' %}">
+                            <button class="btn btn-success float-right" style="margin-right: 10px;">Crear</button>
+                        </a>
+                    </h5>
                     <form action="" method="get">
                         {{ myFilter.form }}
                         <button class="btn btn-primary" type="submit">Search</button>

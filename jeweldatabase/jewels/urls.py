@@ -9,12 +9,18 @@ urlpatterns = [
     path('logout/', views.logoutUser, name="logout"),
 
     path('', views.home, name="home"),
-    path('product/<str:pk>/', views.product, name="product"),
-    path('products/', views.products, name="products"),
     path('customers/', views.customers, name="customers"),
     path('customer/<str:pk>/', views.customer, name="customer"),
+    path('create_customer/', views.createCustomer, name="create_customer"),
+    path('update_customer/<str:pk>', views.updateCustomer, name="update_customer"),
     path('user/', views.userPage, name='user-page'),
     path('account/', views.accountSettings, name='account'),
+
+    path('product/<str:pk>/', views.product, name="product"),
+    path('create_product/', views.createProduct, name="create_product"),
+    path('update_product/<str:pk>/', views.updateProduct, name="update_product"),
+    path('delete_product/<str:pk>/', views.deleteProduct, name="delete_product"),
+    path('products/', views.products, name="products"),
 
     path('create_order/<str:pk>', views.createOrder, name="create_order"),
     path('update_order/<str:pk>', views.updateOrder, name="update_order"),

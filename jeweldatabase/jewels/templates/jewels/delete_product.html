@@ -1,0 +1,22 @@
+{% extends 'jewels/main.html' %}
+{% load static %}
+{% block content %}
+
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <p>¿Estás seguro de que quieres borrar "{{ product }}?"</p>
+
+                <form action="{% url 'delete_product' product.id  %}" method="post">
+                    {% csrf_token %}
+                    <a class="btn btn-warning" href="{% url 'product' product.id %}">Cancelar</a>
+                    <input class="btn btn-danger" type="submit" name="Confirm">
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
 from .models import *
-from .forms import OrderForm, CreateUserForm, CustomerForm
-from .filters import OrderFilter, CustomerFilter
+from .forms import OrderForm, CreateUserForm, CustomerForm, ProductForm
+from .filters import OrderFilter, CustomerFilter, ProductFilter
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
 # Create your views here.
@@ -99,6 +99,21 @@ def accountSettings(request):
 def home(request):
     all_orders = Order.objects.all()
     orders = Order.objects.all().order_by('-id')[:5]
+    products = Product.objects.all()
+    low_unit_products = Product.objects.filter(units__lte=3)
+
+    total_gains = 0
+
+    for order in all_orders:
+        total_gains += order.product.sell_price
+
+    total_cost = 0
+
+    for product in products:
+        total_cost += product.cost_price * product.units
+
+    for order in all_orders:
+        total_cost += order.product.cost_price
 
     customers = Customer.objects.all()
 
@@ -114,7 +129,10 @@ def home(request):
         'delivered': delivered,
         'pending': pending,
         'total_customers': total_customers,
-        'total_orders': total_orders
+        'total_orders': total_orders,
+        'total_gains': total_gains,
+        'total_cost': total_cost,
+        'low_unit_products': low_unit_products,
     }
     return render(request, 'jewels/dashboard.html', context)
 
@@ -132,9 +150,68 @@ def product(request, pk):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
+def createProduct(request):
+    form = ProductForm()
+
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/products/')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'jewels/create_product.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def updateProduct(request, pk):
+    product = Product.objects.get(id=pk)
+    form = ProductForm(instance=product)
+
+    if request.method == "POST":
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('/product/' + pk)
+
+    context = {'form': form,
+               'product': product,
+               }
+    return render(request, 'jewels/update_product.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def deleteProduct(request, pk):
+    product = Product.objects.get(id=pk)
+
+    if request.method == "POST":
+        product.delete()
+        return redirect('/products/')
+
+    context = {
+        'product': product,
+    }
+    return render(request, 'jewels/delete_product.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def products(request):
     products = Product.objects.all()
-    return render(request, 'jewels/products.html', {'products': products})
+
+    myFilter = ProductFilter(request.GET, queryset=Product.objects.all())
+    products = myFilter.qs
+
+    context = {
+        'products': products,
+        'myFilter': myFilter,
+    }
+
+    return render(request, 'jewels/products.html', context)
 
 
 @login_required(login_url='login')
@@ -170,10 +247,40 @@ def customers(request):
     }
     return render(request, 'jewels/customers.html', context)
 
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def createCustomer(request):
-    CustomerFormSet = inlineformset_factory(Customer, fields=('name', 'phone'))
+    form = CustomerForm()
+
+    if request.method == "POST":
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/customers/')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'jewels/create_customer.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def updateCustomer(request, pk):
+    customer = Customer.objects.get(id=pk)
+    form = CustomerForm(instance=customer)
+
+    if request.method == "POST":
+        form = CustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('/customer/' + pk)
+
+    context = {'form': form,
+               'customer': customer,
+               }
+    return render(request, 'jewels/update_customer.html', context)
 
 
 @login_required(login_url='login')

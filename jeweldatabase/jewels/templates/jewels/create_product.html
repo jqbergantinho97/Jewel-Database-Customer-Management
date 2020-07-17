@@ -1,0 +1,135 @@
+{% extends "jewels/main.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+        .profile-pic {
+            max-width: 286px;
+            max-height: 180px;
+
+        }
+
+        .imagen{
+            background-color: #aaaaaa;
+        }
+
+        .nombre{
+
+        }
+
+        .descripcion{
+            background-color: #a2d5e2;
+        }
+
+        .categoria {
+            background-color: #f7ba5b;
+        }
+
+        .tamaño{
+            background-color: #679ac6;
+        }
+
+        .material{
+            background-color: #c9a2ff;
+        }
+
+        .cost{
+            background-color: #ffa2a2;
+        }
+
+        .sell{
+            background-color: #a3f188;
+        }
+
+        .unidades{
+            background-color: #e2d08c;
+        }
+</style>
+
+    <div class="container-fluid align-content-center">
+        <div class="row align-content-center">
+            <div class="col-xl-4"></div>
+            <div class="col-xl-4">
+                <a href="{% url 'products' %}">
+                        <span class="material-icons" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px; font-size: 36px">arrow_back</span>
+                </a>
+                <form action="" method="post" enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    {{ form.management_form }}
+                    <div class="card">
+                        <h4 class="card-header imagen">Imagen <span class="material-icons float-right"
+                                                             style="font-size: 32px;">perm_media</span></h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.product_pic }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-header nombre">Nombre <span class="material-icons float-right"
+                                                             style="font-size: 32px;">create</span></h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.name }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-header descripcion">Descripción <span class="material-icons float-right" style="font-size: 32px;">description</span>
+                        </h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.description }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-header categoria">Categoría <span class="material-icons float-right"
+                                                             style="font-size: 32px;">category</span></h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.category }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-header tamaño">Tamaño <span class="material-icons float-right"
+                                                             style="font-size: 32px;">straighten</span></h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.size }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-header material">Material <span class="material-icons float-right"
+                                                               style="font-size: 32px;">layers</span></h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.material }}</p>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <h4 class="card-header cost">Coste <span class="material-icons float-right" style="font-size: 32px;">money_off</span>
+                        </h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.cost_price }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-header sell">Precio de venta <span class="material-icons float-right"
+                                                                      style="font-size: 32px;">attach_money</span></h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.sell_price }}</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-header unidades">Unidades <span class="material-icons float-right"
+                                                               style="font-size: 32px;">layers</span></h4>
+                        <div class="card card-body">
+                            <p class="card-text">{{ form.units }}</p>
+                        </div>
+                    </div>
+                    <a href="{% url 'products' %}">
+                        <span class="material-icons" style="margin-top: 10px; margin-bottom: 10px; margin-left: 5px; font-size: 36px">arrow_back</span>
+                    </a>
+                    <input class="btn btn-info"type="submit" name="Submit" style="float: right; margin-top: 10px;">
+
+                </form>
+            </div>
+            <div class="col-xl-4"></div>
+        </div>
+    </div>
+
+{% endblock %}
