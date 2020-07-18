@@ -121,13 +121,15 @@ def home(request):
     customers = Customer.objects.all().order_by('-date_created')[:5]
     total_orders = all_orders.count()
     delivered = all_orders.filter(status='Enviado').count()
-    pending = all_orders.filter(status='Pendiente').count()
+    pending = all_orders.filter(status='Pendiente')
+    pending_count = all_orders.filter(status='Pendiente').count()
 
     context = {
         'orders': orders,
         'customers': customers,
         'delivered': delivered,
         'pending': pending,
+        'pending_count': pending_count,
         'total_customers': total_customers,
         'total_orders': total_orders,
         'total_gains': total_gains,
@@ -219,7 +221,7 @@ def products(request):
 def customer(request, pk):
     customer = Customer.objects.get(id=pk)
 
-    orders = customer.order_set.all()
+    orders = customer.order_set.all().order_by('-date_created')
     order_count = orders.count()
 
     myFilter = OrderFilter(request.GET, queryset=orders)
@@ -286,18 +288,20 @@ def updateCustomer(request, pk):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def createOrder(request, pk):
-    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=10)
     customer = Customer.objects.get(id=pk)
-    formset = OrderFormSet(queryset=Order.objects.none(), instance=customer)
-    #form = OrderForm(initial={'customer':customer})
+    form = OrderForm(initial={'customer': customer})
+    print(form)
     if request.method == 'POST':
-        #print("Printing POST: ", request.POST)
-        formset= OrderFormSet(request.POST, instance=customer)
-        if formset.is_valid():
-            formset.save()
-            return redirect('/')
+        print("Printing POST: ", request.POST)
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            print("Is valid")
+            form.save()
+            return redirect('/customer/' + str(customer.id))
 
-    context = {'formset': formset}
+    context = {'form': form,
+               'customer': customer,
+               }
 
     return render(request, 'jewels/order_form.html', context)
 
@@ -307,15 +311,18 @@ def createOrder(request, pk):
 def updateOrder(request, pk):
     order = Order.objects.get(id=pk)
     form = OrderForm(instance=order)
+    customer = Order.objects.get(id=pk).customer
 
     if request.method == 'POST':
-        #print("Printing POST: ", request.POST)
+        print("Printing POST: ", request.POST)
         form = OrderForm(request.POST, instance=order)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect('/customer/' + str(customer.id))
 
-    context = {'formset':form}
+    context = {'form': form,
+               'customer': customer,
+               }
     return render(request, 'jewels/order_form.html', context)
 
 

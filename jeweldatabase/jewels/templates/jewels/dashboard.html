@@ -62,6 +62,7 @@
         </div>
         <div class="row">
             <div class="col-md">
+                <br>
                 <h5>Productos con menos de 3 unidades</h5>
                 <hr>
                 <div class="card card-body">
@@ -91,6 +92,41 @@
                             </tr>
                         {% endfor %}
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <br>
+                <h5>Pedidos pendientes de envío</h5>
+                <hr>
+                <div class="card card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Producto</th>
+                            <th>Nota</th>
+                            <th>Fecha Pedido</th>
+                            <th>Estado</th>
+                            <th>Actualizar</th>
+                            <th>Borrar</th>
+                        </tr>
+
+                        {% for i in pending %}
+                            <tr>
+                                <td><a href="{% url 'customer' i.customer.id %}">{{ i.customer }}</a></td>
+                                <td><a href="{% url 'product' i.product.id %}">{{ i.product }}</a></td>
+                                <td>{{ i.note }}</td>
+                                <td>{{ i.date_created }}</td>
+                                <td>{{ i.status }}</td>
+                                <td><a href="{% url 'update_order' i.id %}" class="btn btn-sm btn-info">Actualizar</a></td>
+                                <td><a href="{% url 'delete_order' i.id %}" class="btn btn-sm btn-danger">Borrar</a></td>
+                            </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
                 </div>
             </div>
         </div>

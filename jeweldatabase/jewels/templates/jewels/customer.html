@@ -4,16 +4,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md">
-                <div class="card card-body">
+                <div class="card card-body" style="background-color: #fcea9f;margin-top: 10px;">
                     <h5>Cliente: {{ customer.name }}</h5>
                     <hr>
-                    <a class="btn btn-outline-info btn-sm btn-block"href="{% url 'update_customer' customer.id %}">Actualizar cliente</a>
-                    <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'create_order' customer.id %}">Realizar pedido</a>
+                    <a class="btn btn-outline-dark btn-sm btn-block"href="{% url 'update_customer' customer.id %}">Actualizar cliente</a>
+                    <a class="btn btn-outline-dark btn-sm btn-block" href="{% url 'create_order' customer.id %}">Realizar pedido</a>
                 </div>
             </div>
 
             <div class="col-md">
-                <div class="card card-body">
+                <div class="card card-body" style="background-color: #6fb8dc ;margin-top: 10px;">
                     <h5>Información de contacto</h5>
                     <hr>
                     <p>Email: {{ customer.email }}</p>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-md">
-                <div class="card card-body">
+                <div class="card card-body" style="background-color: #68cbbb; margin-top: 10px;">
                     <h5>Pedidos del cliente</h5>
                     <hr>
                     <h1 style="text-align: center; padding: 10px">{{ order_count }}</h1>

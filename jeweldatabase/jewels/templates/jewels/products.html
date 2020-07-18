@@ -8,14 +8,11 @@
         <div class="row">
             <div class="col-md">
                 <div class="card card-body">
-                    <h5>Productos
-                        <a href="{% url 'create_product' %}">
-                            <button class="btn btn-success float-right" style="margin-right: 10px;">Crear</button>
-                        </a>
-                    </h5>
+                    <h3>Productos</h3>
+                    <br>
                     <form action="" method="get">
                         {{ myFilter.form }}
-                        <button class="btn btn-primary" type="submit">Search</button>
+                        <button class="btn btn-primary" type="submit">Buscar</button>
                     </form>
                 </div>
                 <div class="card card-body">
@@ -29,7 +26,9 @@
                             <th>Coste</th>
                             <th>Precio de venta</th>
                             <th>Unidades restantes</th>
-                            <th></th>
+                            <th><a href="{% url 'create_product' %}">
+                            <button class="btn btn-success float-left" style="margin-right: 10px;">Crear</button>
+                        </a></th>
                         </tr>
                         {% for i in products %}
                             <tr>
