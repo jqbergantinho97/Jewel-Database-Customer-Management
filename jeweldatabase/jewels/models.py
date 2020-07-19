@@ -26,6 +26,11 @@ class Product(models.Model):
         ('Gemelos', 'Gemelos'),
         ('Anillo', 'Anillo'),
         ('Llavero', 'Llavero'),
+        ('Pendientes', 'Pendientes'),
+        ('Brazalete', 'Brazalete'),
+        ('Gargantilla', 'Gargantilla'),
+        ('Colgante', 'Colgante'),
+        ('Tobillera', 'Tobillera'),
     )
 
     name = models.CharField(max_length=200, null=True)

@@ -174,7 +174,7 @@ def updateProduct(request, pk):
     form = ProductForm(instance=product)
 
     if request.method == "POST":
-        form = ProductForm(request.POST, instance=product)
+        form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
             return redirect('/product/' + pk)
@@ -203,7 +203,7 @@ def deleteProduct(request, pk):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def products(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by("-id")
 
     myFilter = ProductFilter(request.GET, queryset=Product.objects.all())
     products = myFilter.qs
