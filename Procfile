@@ -1,1 +1,1 @@
-web: gunicorn jeweldatabase.wsgi --log-file -
+web: gunicorn jewels.wsgi --log-file -
